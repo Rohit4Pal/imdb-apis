@@ -1,4 +1,3 @@
-const { request } = require('express');
 const express = require('express');
 const Joi = require("joi");
 
@@ -50,8 +49,7 @@ app.post('/api/v1/movies', (req, res) => {
     }
 
     const movie = {
-        id: movies.length + 1,
-        name: req.body.name
+        ...req.body, id: movies.length + 1
     };
 
     movies.push(movie);
@@ -77,7 +75,7 @@ app.put('/api/v1/movies/:id', (req, res) => {
     }
 
 
-    //if id does not exist, create a new object
+    //if id does not exist, create a new object in the array
     const movieIndex = movies.findIndex(movie => movie.id === parseInt(id));
     if (movieIndex === -1) {
         const movie = {...req.body, id: movies.length + 1};
